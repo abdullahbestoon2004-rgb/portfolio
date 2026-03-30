@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from '../../utils/mockAxios';
+import axios from '../../utils/apiClient';
 import { Plus, Image as ImageIcon } from 'lucide-react';
 import ProjectCard from '../../components/admin/ProjectsManager/ProjectCard';
 import ProjectForm from '../../components/admin/ProjectsManager/ProjectForm';
@@ -15,7 +15,7 @@ const ManageProjects = () => {
 
     const fetchProjects = async () => {
         try {
-            const res = await axios.get('http://localhost:5001/api/projects');
+            const res = await axios.get('/api/projects');
             setProjects(res.data);
         } catch (error) {
             console.error(error);
@@ -27,10 +27,10 @@ const ManageProjects = () => {
     const handleSave = async (data) => {
         try {
             if (editingItem) {
-                await axios.put(`http://localhost:5001/api/projects/${editingItem._id}`, data);
+                await axios.put(`/api/projects/${editingItem._id}`, data);
                 setNotification({ message: 'Project updated successfully!', type: 'success' });
             } else {
-                await axios.post('http://localhost:5001/api/projects', data);
+                await axios.post('/api/projects', data);
                 setNotification({ message: 'Project added successfully!', type: 'success' });
             }
             setIsFormOpen(false);
@@ -43,7 +43,7 @@ const ManageProjects = () => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:5001/api/projects/${deleteId}`);
+            await axios.delete(`/api/projects/${deleteId}`);
             setNotification({ message: 'Project deleted successfully!', type: 'success' });
             setDeleteId(null);
             fetchProjects();

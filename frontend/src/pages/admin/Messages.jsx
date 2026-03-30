@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from '../../utils/mockAxios';
+import axios from '../../utils/apiClient';
 import { MessageSquare, Inbox, Trash2, Mail } from 'lucide-react';
 import MessageItem from '../../components/admin/MessagesManager/MessageItem';
 import ConfirmModal from '../../components/admin/shared/ConfirmModal';
@@ -13,7 +13,7 @@ const Messages = () => {
 
     const fetchMessages = async () => {
         try {
-            const res = await axios.get('http://localhost:5001/api/messages');
+            const res = await axios.get('/api/messages');
             setMessages(res.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
         } catch (error) {
             console.error(error);
@@ -24,7 +24,7 @@ const Messages = () => {
 
     const handleMarkRead = async (id) => {
         try {
-            await axios.put(`http://localhost:5001/api/messages/${id}/read`);
+            await axios.put(`/api/messages/${id}/read`);
             setNotification({ message: 'Message marked as read', type: 'success' });
             fetchMessages();
         } catch (error) {
@@ -34,7 +34,7 @@ const Messages = () => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:5001/api/messages/${deleteId}`);
+            await axios.delete(`/api/messages/${deleteId}`);
             setNotification({ message: 'Message deleted successfully', type: 'success' });
             setDeleteId(null);
             fetchMessages();

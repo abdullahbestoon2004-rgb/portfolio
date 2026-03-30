@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import axios from '../utils/mockAxios';
+import axios from '../utils/apiClient';
 
 const AuthContext = createContext();
 
@@ -9,13 +9,19 @@ export const AuthProvider = ({ children }) => {
     const [admin, setAdmin] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const logout = () => {
+        localStorage.removeItem('token');
+        delete axios.defaults.headers.common['Authorization'];
+        setAdmin(null);
+    };
+
     useEffect(() => {
         const checkAuthStatus = async () => {
             const token = localStorage.getItem('token');
             if (token) {
                 try {
                     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                    const res = await axios.get('http://localhost:5001/api/auth/me');
+                    const res = await axios.get('/api/auth/me');
                     setAdmin(res.data);
                 } catch (error) {
                     console.error("Token invalid", error);
@@ -29,7 +35,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const res = await axios.post('http://localhost:5001/api/auth/login', { email, password });
+            const res = await axios.post('/api/auth/login', { email, password });
             const { token, ...userData } = res.data;
             localStorage.setItem('token', token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -39,12 +45,6 @@ export const AuthProvider = ({ children }) => {
             console.error(error);
             return false;
         }
-    };
-
-    const logout = () => {
-        localStorage.removeItem('token');
-        delete axios.defaults.headers.common['Authorization'];
-        setAdmin(null);
     };
 
     return (

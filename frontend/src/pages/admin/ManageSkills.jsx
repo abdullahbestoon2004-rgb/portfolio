@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from '../../utils/mockAxios';
+import axios from '../../utils/apiClient';
 import { Plus, Activity } from 'lucide-react';
 import SkillCard from '../../components/admin/SkillsManager/SkillCard';
 import SkillForm from '../../components/admin/SkillsManager/SkillForm';
@@ -15,7 +15,7 @@ const ManageSkills = () => {
 
     const fetchSkills = async () => {
         try {
-            const res = await axios.get('http://localhost:5001/api/skills');
+            const res = await axios.get('/api/skills');
             setSkills(res.data);
         } catch (error) {
             console.error(error);
@@ -27,10 +27,10 @@ const ManageSkills = () => {
     const handleSave = async (data) => {
         try {
             if (editingItem) {
-                await axios.put(`http://localhost:5001/api/skills/${editingItem._id}`, data);
+                await axios.put(`/api/skills/${editingItem._id}`, data);
                 setNotification({ message: 'Skill updated successfully!', type: 'success' });
             } else {
-                await axios.post('http://localhost:5001/api/skills', data);
+                await axios.post('/api/skills', data);
                 setNotification({ message: 'Skill added successfully!', type: 'success' });
             }
             setIsFormOpen(false);
@@ -43,7 +43,7 @@ const ManageSkills = () => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:5001/api/skills/${deleteId}`);
+            await axios.delete(`/api/skills/${deleteId}`);
             setNotification({ message: 'Skill deleted successfully!', type: 'success' });
             setDeleteId(null);
             fetchSkills();

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import axios from '../utils/mockAxios';
+import axios from '../utils/apiClient';
 import { gsap } from '../utils/gsap';
 
 const Skills = () => {
@@ -8,7 +8,7 @@ const Skills = () => {
     const trackRef = useRef(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5001/api/skills')
+        axios.get('/api/skills')
             .then(res => setSkills(res.data))
             .catch(err => console.error('Failed to load skills', err));
     }, []);

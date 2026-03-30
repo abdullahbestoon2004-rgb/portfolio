@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import axios from '../utils/mockAxios';
+import axios from '../utils/apiClient';
 import { ArrowUpRight } from 'lucide-react';
 import { gsap } from '../utils/gsap';
 
@@ -9,7 +9,7 @@ const Projects = () => {
     const sectionRef = useRef(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5001/api/projects')
+        axios.get('/api/projects')
             .then(res => setProjects(res.data))
             .catch(err => console.error('Failed to load projects', err));
     }, []);

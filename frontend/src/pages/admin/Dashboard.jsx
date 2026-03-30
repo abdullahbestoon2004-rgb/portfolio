@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from '../../utils/mockAxios';
+import axios from '../../utils/apiClient';
 import { Image, Activity, FileText, MessageSquare, ExternalLink, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -19,10 +19,10 @@ const Dashboard = () => {
     const fetchData = async () => {
         try {
             const [projects, skills, education, messages] = await Promise.all([
-                axios.get('http://localhost:5001/api/projects'),
-                axios.get('http://localhost:5001/api/skills'),
-                axios.get('http://localhost:5001/api/education'),
-                axios.get('http://localhost:5001/api/messages')
+                axios.get('/api/projects'),
+                axios.get('/api/skills'),
+                axios.get('/api/education'),
+                axios.get('/api/messages')
             ]);
 
             setStats({

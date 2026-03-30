@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from '../../utils/mockAxios';
+import axios from '../../utils/apiClient';
 import { Plus, Edit2, Trash2, GraduationCap } from 'lucide-react';
 import EducationForm from '../../components/admin/EducationManager/EducationForm';
 import ConfirmModal from '../../components/admin/shared/ConfirmModal';
@@ -14,7 +14,7 @@ const ManageEducation = () => {
 
     const fetchEducation = async () => {
         try {
-            const res = await axios.get('http://localhost:5001/api/education');
+            const res = await axios.get('/api/education');
             setEducation(res.data);
         } catch (error) {
             console.error(error);
@@ -26,10 +26,10 @@ const ManageEducation = () => {
     const handleSave = async (data) => {
         try {
             if (editingItem) {
-                await axios.put(`http://localhost:5001/api/education/${editingItem._id}`, data);
+                await axios.put(`/api/education/${editingItem._id}`, data);
                 setNotification({ message: 'Education updated successfully!', type: 'success' });
             } else {
-                await axios.post('http://localhost:5001/api/education', data);
+                await axios.post('/api/education', data);
                 setNotification({ message: 'Education added successfully!', type: 'success' });
             }
             setIsFormOpen(false);
@@ -42,7 +42,7 @@ const ManageEducation = () => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:5001/api/education/${deleteId}`);
+            await axios.delete(`/api/education/${deleteId}`);
             setNotification({ message: 'Education deleted successfully!', type: 'success' });
             setDeleteId(null);
             fetchEducation();

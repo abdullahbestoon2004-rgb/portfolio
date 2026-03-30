@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import axios from '../utils/mockAxios';
+import axios from '../utils/apiClient';
 import { gsap } from '../utils/gsap';
 
 const Education = () => {
@@ -7,7 +7,7 @@ const Education = () => {
     const sectionRef = useRef(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5001/api/education')
+        axios.get('/api/education')
             .then(res => setEducationList(res.data))
             .catch(err => console.error('Failed to load education', err));
     }, []);

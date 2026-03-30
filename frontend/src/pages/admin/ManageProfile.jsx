@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from '../../utils/mockAxios';
+import axios from '../../utils/apiClient';
 import { Save, User, Mail, Globe, Hash, Camera } from 'lucide-react';
 import Notification from '../../components/admin/shared/Notification';
 
@@ -45,7 +45,7 @@ const ManageProfile = () => {
     const [notification, setNotification] = useState({ message: '', type: 'success' });
 
     useEffect(() => {
-        axios.get('http://localhost:5001/api/profile').then(res => {
+        axios.get('/api/profile').then(res => {
             if (res.data) setProfile(res.data);
         });
     }, []);
@@ -67,7 +67,7 @@ const ManageProfile = () => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            await axios.put('http://localhost:5001/api/profile', profile);
+            await axios.put('/api/profile', profile);
             setNotification({ message: 'Profile updated successfully!', type: 'success' });
         } catch (error) {
             setNotification({ message: 'Failed to update profile. Try a smaller image.', type: 'error' });

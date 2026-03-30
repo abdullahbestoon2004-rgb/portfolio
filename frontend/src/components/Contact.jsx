@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import axios from '../utils/mockAxios';
+import axios from '../utils/apiClient';
 import { gsap } from '../utils/gsap';
 
 const Contact = ({ profile }) => {
@@ -34,7 +34,7 @@ const Contact = ({ profile }) => {
         setStatus('loading');
 
         try {
-            await axios.post('http://localhost:5001/api/messages', formData);
+            await axios.post('/api/messages', formData);
             setStatus('success');
             setFormData({ name: '', email: '', message: '' });
             setTimeout(() => setStatus(null), 3000);
