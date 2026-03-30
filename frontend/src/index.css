@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Outfit", system-ui, sans-serif;
+  
+  --color-primary: #ffffff;
+  --color-secondary: #9ca3af;
+  --color-accent: #3b82f6;
+
+  --color-bg-dark: #050505;
+  --color-bg-card: #121212;
+  --color-bg-border: #262626;
+
+  --animate-gradient: gradient 8s linear infinite;
+}
+
+/* Custom base styles for premium feel */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-[var(--color-bg-dark)] text-[var(--color-primary)] antialiased selection:bg-white/20;
+    overflow-x: hidden;
+  }
+}
+
+/* Keyframes for animations */
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Utilities for glassmorphism */
+@utility glass {
+  @apply bg-black/40 backdrop-blur-xl border border-white/10;
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s ease-in-out infinite;
+}
+
+.custom-cursor-enabled,
+.custom-cursor-enabled * {
+  cursor: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-bounce-subtle {
+    animation: none;
+  }
+}
